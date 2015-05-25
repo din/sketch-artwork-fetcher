@@ -27,4 +27,14 @@ It worth mentioning that the plugin works only with Sketch 3.1 and newer.
 1. Download and open `sketch-artwork-fetcher-master.zip`
 2. Navigate the Sketch menu bar to `Plugins ▸ Reveal Plugins Folder…`
 3. Place the `sketch-artwork-fetcher.sketchplugin` bundle into the revealed plugins directory
-4. Profit.
+4. ???
+5. Profit.
+
+## Contribution
+Any contributions you make to this repository are greatly appreciated. Feel free to send a pull request if you've made an improvement. The recommended steps to follow for any contribution are:
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request

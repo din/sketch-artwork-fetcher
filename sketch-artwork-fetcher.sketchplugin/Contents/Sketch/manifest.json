@@ -20,6 +20,6 @@
   "description" : "Plugin to fetch artworks by their album or artist names",
   "authorEmail" : "mxmmlnkv@gmail.com",
   "compatibleVersion" : "3.1",
-  "homepage": "http://github.com/bbsody/sketch-artwork-fetcher",
+  "homepage": "http://github.com/mmth/sketch-artwork-fetcher",
   "name" : "Artwork Fetcher"
 }
