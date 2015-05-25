@@ -1,0 +1,100 @@
+var onRun = function(context) {
+var doc = context.document;
+var selection = context.selection
+
+var coversCollection = []
+var coversUrls = []
+urlPattern = /^https?:\/\/(?:[aA-zZ\-]+\.)+[a-z]{2,6}(?:\/[^/#?]+)+\.(?:jpg|gif|png)$/ig
+
+function alert(msg, title) {
+    title = title || "Error"
+    app = [NSApplication sharedApplication]
+    [app displayDialog:msg withTitle:title]
+}
+
+function get(url) {
+    var request = NSURLRequest.requestWithURL(NSURL.URLWithString(url))
+    var response = NSURLConnection.sendSynchronousRequest_returningResponse_error(request, null, null)
+    return response;
+}
+
+function getQuery(reason) {
+    reason = reason || "Enter artists and/or album names:"
+    query = [doc askForUserInput:reason initialValue:""]
+    if (query == '') {                                            // if user entered nothing
+        reason = "You forgot to enter the query :-("
+        getQuery(reason)
+    }
+    else if (query === null) {                                    // if user cancelled box
+        log("null's here!")
+    }
+    else {
+        query = encodeURIComponent(query)
+        fetchCovers(query)                                        // everything is ok
+    }
+}
+
+function fetchCovers(query) {                                     // fetching cover arts
+    url = 'http://ws.audioscrobbler.com/2.0/?method=album.search&album='+query+'&api_key=2486cfd15a30b079cde22315f0268a2d&format=json'
+    json = JSON.parse(NSString.alloc().initWithData_encoding(get(url), NSUTF8StringEncoding))
+    albums = json.results.albummatches.album                      // getting list of albums
+    if (typeof albums === 'undefined') {
+        alert('This query doesn’t fit any album.', 'Nothing found')
+    }
+    else {
+        if (typeof albums.length === 'undefined') {                // pushing album to coversUrls if there's only one album here
+            log(albums.image[3]['#text'])
+            if (urlPattern.test(albums.image[3]['#text']) == true) coversUrls.push(albums.image[3]['#text'])
+        }
+        else {                                                     // pushing albums to coversUrls
+            for (i=0;i<albums.length;i++) {
+            current_album = albums[i]
+            largest = current_album.image.length - 1
+            if (urlPattern.test(current_album.image[largest]['#text']) == true) coversUrls.push(current_album.image[largest]['#text'])
+            }
+        }
+        insertToSketch()
+    }
+}
+
+function loadCovers(layersAmount) {
+    numberOfCovers = coversUrls.length
+
+  for(var i = 0; i < layersAmount; i++){
+      r = Math.floor(Math.random() * numberOfCovers)
+      imageUrl = coversUrls[r]
+      newImage = [[NSImage alloc] initWithContentsOfURL:[NSURL URLWithString:imageUrl]]
+      coversCollection.push(newImage)
+  }
+
+  return coversCollection;
+}
+
+function insertToSketch(){
+    allLayers = [[doc currentPage] layers]
+    coversCollection = loadCovers([selection count])
+
+    for(var i = 0; i < [selection count]; i++){
+        layer = selection[i]
+        if([layer class] == MSShapeGroup){
+            image = coversCollection[i]
+            fill = layer.style().fills().firstObject()
+            fill.setFillType(4)
+            coll = layer.style().fills().firstObject().documentData().images()
+            [fill setPatternImage:image collection:coll]
+            layer.style().fills().firstObject().setPatternFillType(1)
+        }
+    }
+}
+
+function activate(){
+    if([selection count] == 0) {
+        alert('Select at least one shape.', 'Oh, dude…')
+    }
+    else {
+        getQuery()
+    }
+}
+
+activate();
+};
