@@ -6,7 +6,7 @@ Sketch.app plugin for fetching artworks from Last.fm web-service and filling sel
 Initially, the plugin was developed to fulfil our own needs at [Semibold Mammoth](http://mmth.us) when we designed [Simplify for Mac](http://mmth.us/simplify) and its [Tape.im](http://tape.im) web-service.
 
 ## Demo
-![Fetching artworks](https://raw.githubusercontent.com/bbsody/sketch-artwork-fetcher/master/tutorial/fetch.gif)
+![Fetching artworks](https://raw.githubusercontent.com/mmth/sketch-artwork-fetcher/master/tutorial/fetch.gif)
 
 ## Usage
 1. Select at least one shape you want to fill with an artwork
