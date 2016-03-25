@@ -16,10 +16,10 @@
     "title" : "Artwork Fetcher"
   },
   "identifier" : "com.example.sketch.f6c1cab6-9e35-47ff-8259-a0cf0cc12a56",
-  "version" : "1.0",
+  "version" : "1.1",
   "description" : "Plugin to fetch artworks by their album or artist names",
   "authorEmail" : "mxmmlnkv@gmail.com",
-  "compatibleVersion" : "3.1",
+  "compatibleVersion" : "3.6",
   "homepage": "http://github.com/mmth/sketch-artwork-fetcher",
   "name" : "Artwork Fetcher"
 }
